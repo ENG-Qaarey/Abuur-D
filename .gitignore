@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+dist/
+out/
+build/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+.vercel/
+.nest-cli
+
+# Secrets: only the *.example templates are committed
+.env
+.env.*
+!.env.example
+
+# Local-only
+_backup/
+.claude/settings.local.json
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

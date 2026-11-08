@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1120" width="1600" height="1120" font-family="'Segoe UI', -apple-system, Roboto, Helvetica, Arial, sans-serif">
+<defs>
+<marker id="arrow-38bdf8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
+<marker id="arrow-a78bfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker>
+<marker id="arrow-34d399" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker>
+<marker id="arrow-fbbf24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker>
+<marker id="arrow-2dd4bf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker>
+<marker id="arrow-94a3b8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1120" rx="0" fill="#0b1120" stroke="#0b1120" stroke-width="1.2"/>
+<text x="60" y="62" font-size="30" fill="#e2e8f0" font-weight="700" text-anchor="start">ABUUR Platform Architecture</text>
+<text x="60" y="90" font-size="14.5" fill="#94a3b8" font-weight="400" text-anchor="start">NestJS API · Prisma · Supabase (Postgres, Auth, Storage) · BullMQ/Redis — state after Phase 1 hardening, Nov 2026</text>
+<rect x="60" y="116" width="1120" height="128" rx="10" fill="#111a2e" stroke="#26344f" stroke-width="1.2"/>
+<text x="80" y="142" font-size="11.5" fill="#94a3b8" font-weight="600" text-anchor="start" letter-spacing="1.4">CLIENTS</text>
+<rect x="80" y="156" width="255" height="68" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="207.5" y="184" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="middle">Business dashboard</text>
+<text x="207.5" y="205" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="middle">Next.js · Abuur/</text>
+<rect x="355" y="156" width="255" height="68" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="482.5" y="184" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="middle">Online storefront</text>
+<text x="482.5" y="205" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="middle">public store pages</text>
+<rect x="630" y="156" width="255" height="68" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="757.5" y="184" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="middle">ABUUR admin</text>
+<text x="757.5" y="205" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="middle">SUPER_ADMIN users</text>
+<rect x="905" y="156" width="255" height="68" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="1032.5" y="184" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="middle">WhatsApp customers</text>
+<text x="1032.5" y="205" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="middle">orders &amp; chat</text>
+<rect x="1220" y="116" width="320" height="128" rx="10" fill="#16213a" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="1234" y="140" font-size="14.5" fill="#a78bfa" font-weight="600" text-anchor="start">Supabase Auth</text>
+<text x="1234" y="160" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Sign-up / login (email, phone)</text>
+<text x="1234" y="177" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Issues the Supabase session JWT</text>
+<text x="1234" y="194" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Public keys: /auth/v1/.well-known/jwks.json</text>
+<polyline points="1180,176 1218,176" fill="none" stroke="#a78bfa" stroke-width="1.8" marker-end="url(#arrow-a78bfa)"/>
+<text x="1199" y="168" font-size="13" fill="#a78bfa" font-weight="400" text-anchor="middle">①</text>
+<polyline points="620,244 620,288" fill="none" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arrow-38bdf8)"/>
+<text x="634" y="262" font-size="12.5" fill="#38bdf8" font-weight="400" text-anchor="start">② POST /api/auth/verify-supabase  →  app JWT (1h)</text>
+<text x="634" y="279" font-size="12.5" fill="#38bdf8" font-weight="400" text-anchor="start">③ every call: Authorization: Bearer &lt;app JWT&gt;  (+ X-Business-Id)</text>
+<polyline points="1300,244 1300,268 1150,268 1150,288" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arrow-a78bfa)"/>
+<text x="1312" y="262" font-size="11.5" fill="#a78bfa" font-weight="400" text-anchor="start">verify Supabase token (JWKS / HS256 legacy)</text>
+<rect x="60" y="290" width="1120" height="522" rx="10" fill="#111a2e" stroke="#26344f" stroke-width="1.2"/>
+<text x="80" y="316" font-size="11.5" fill="#94a3b8" font-weight="600" text-anchor="start" letter-spacing="1.4">NESTJS API  ·  /API  ·  REST  ·  SWAGGER AT /API/DOCS (NON-PRODUCTION ONLY)</text>
+<text x="80" y="344" font-size="11.5" fill="#94a3b8" font-weight="600" text-anchor="start" letter-spacing="1.4">REQUEST PIPELINE (EVERY REQUEST, IN ORDER)</text>
+<rect x="80" y="354" width="165" height="96" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="94" y="378" font-size="14.5" fill="#38bdf8" font-weight="600" text-anchor="start">Helmet · CORS</text>
+<text x="94" y="398" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">origin allowlist</text>
+<text x="94" y="415" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">compression</text>
+<polyline points="246,402 261,402" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arrow-94a3b8)"/>
+<rect x="263" y="354" width="165" height="96" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="277" y="378" font-size="14.5" fill="#38bdf8" font-weight="600" text-anchor="start">ThrottlerGuard</text>
+<text x="277" y="398" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">100 req/min global</text>
+<text x="277" y="415" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">login: 10/min</text>
+<polyline points="429,402 444,402" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arrow-94a3b8)"/>
+<rect x="446" y="354" width="165" height="96" rx="10" fill="#16213a" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="460" y="378" font-size="14.5" fill="#a78bfa" font-weight="600" text-anchor="start">JwtAuthGuard</text>
+<text x="460" y="398" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">verify HS256 signature</text>
+<text x="460" y="415" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">iss · aud · exp</text>
+<text x="460" y="432" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">load user, must be ACTIVE</text>
+<polyline points="612,402 627,402" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arrow-94a3b8)"/>
+<rect x="629" y="354" width="165" height="96" rx="10" fill="#16213a" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="643" y="378" font-size="14.5" fill="#a78bfa" font-weight="600" text-anchor="start">BusinessAccessGuard</text>
+<text x="643" y="398" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">route needs access marker</text>
+<text x="643" y="415" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">membership + role check</text>
+<text x="643" y="432" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">no marker → 403</text>
+<polyline points="795,402 810,402" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arrow-94a3b8)"/>
+<rect x="812" y="354" width="165" height="96" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="826" y="378" font-size="14.5" fill="#38bdf8" font-weight="600" text-anchor="start">ValidationPipe</text>
+<text x="826" y="398" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">class-validator DTOs</text>
+<text x="826" y="415" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">unknown fields → 400</text>
+<polyline points="978,402 993,402" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arrow-94a3b8)"/>
+<rect x="995" y="354" width="165" height="96" rx="10" fill="#16213a" stroke="#34d399" stroke-width="1.2"/>
+<text x="1009" y="378" font-size="14.5" fill="#34d399" font-weight="600" text-anchor="start">Controller → Service</text>
+<text x="1009" y="398" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">scoped by businessId</text>
+<text x="1009" y="415" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Prisma errors → 404/409</text>
+<text x="80" y="478" font-size="11.5" fill="#94a3b8" font-weight="600" text-anchor="start" letter-spacing="1.4">DOMAIN MODULES BY ROADMAP PHASE</text>
+<rect x="80" y="490" width="258" height="146" rx="10" fill="#10241f" stroke="#34d399" stroke-width="1.6"/>
+<text x="94" y="515" font-size="14.5" fill="#34d399" font-weight="600" text-anchor="start">Phase 1 · Core &amp; tenancy</text>
+<text x="94" y="534" font-size="12" fill="#34d399" font-weight="400" text-anchor="start">access rules enforced</text>
+<rect x="94" y="548" width="46.88" height="23" rx="11.5" fill="#12302a" stroke="#34d399" stroke-width="1"/>
+<text x="117.44" y="564" font-size="12" fill="#e2e8f0" font-weight="400" text-anchor="middle">Auth</text>
+<rect x="148.88" y="548" width="53.6" height="23" rx="11.5" fill="#12302a" stroke="#34d399" stroke-width="1"/>
+<text x="175.68" y="564" font-size="12" fill="#e2e8f0" font-weight="400" text-anchor="middle">Users</text>
+<rect x="210.48" y="548" width="87.2" height="23" rx="11.5" fill="#12302a" stroke="#34d399" stroke-width="1"/>
+<text x="254.07999999999998" y="564" font-size="12" fill="#e2e8f0" font-weight="400" text-anchor="middle">Businesses</text>
+<rect x="94" y="578" width="67.04" height="23" rx="11.5" fill="#12302a" stroke="#34d399" stroke-width="1"/>
+<text x="127.52000000000001" y="594" font-size="12" fill="#e2e8f0" font-weight="400" text-anchor="middle">Members</text>
+<rect x="169.04000000000002" y="578" width="87.2" height="23" rx="11.5" fill="#12302a" stroke="#34d399" stroke-width="1"/>
+<text x="212.64000000000001" y="594" font-size="12" fill="#e2e8f0" font-weight="400" text-anchor="middle">Audit logs</text>
+<rect x="354" y="490" width="258" height="146" rx="10" fill="#16213a" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="368" y="515" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="start">Phase 2 · Store builder</text>
+<text x="368" y="534" font-size="12" fill="#64748b" font-weight="400" text-anchor="start">default-deny until scoped</text>
+<rect x="368" y="548" width="60.32000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="398.16" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Stores</text>
+<rect x="436.32" y="548" width="73.76" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="473.2" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Products</text>
+<rect x="518.08" y="548" width="73.76" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="554.96" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Variants</text>
+<rect x="368" y="578" width="87.2" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="411.6" y="594" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Categories</text>
+<rect x="463.2" y="578" width="80.48" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="503.44" y="594" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Inventory</text>
+<rect x="368" y="608" width="107.36000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="421.68" y="624" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Store domains</text>
+<rect x="483.36" y="608" width="93.92" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="530.32" y="624" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">File assets</text>
+<rect x="628" y="490" width="258" height="146" rx="10" fill="#16213a" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="642" y="515" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="start">Phase 3 · Cart &amp; orders</text>
+<text x="642" y="534" font-size="12" fill="#64748b" font-weight="400" text-anchor="start">default-deny until scoped</text>
+<rect x="642" y="548" width="120.80000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="702.4" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Store customers</text>
+<rect x="770.8" y="548" width="60.32000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="800.9599999999999" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Orders</text>
+<rect x="642" y="578" width="93.92" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="688.96" y="594" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Order items</text>
+<rect x="743.92" y="578" width="114.08000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="800.9599999999999" y="594" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Status history</text>
+<rect x="642" y="608" width="73.76" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="678.88" y="624" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Payments</text>
+<rect x="902" y="490" width="258" height="146" rx="10" fill="#16213a" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="916" y="515" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="start">Phase 4 · Admin &amp; billing</text>
+<text x="916" y="534" font-size="12" fill="#64748b" font-weight="400" text-anchor="start">default-deny until scoped</text>
+<rect x="916" y="548" width="53.6" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="942.8" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Plans</text>
+<rect x="977.6" y="548" width="107.36000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="1031.28" y="564" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Subscriptions</text>
+<rect x="916" y="578" width="120.80000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="976.4" y="594" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Billing records</text>
+<rect x="1044.8" y="578" width="73.76" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="1081.68" y="594" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Invoices</text>
+<rect x="916" y="608" width="67.04" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="949.52" y="624" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Finance</text>
+<rect x="80" y="650" width="258" height="146" rx="10" fill="#16213a" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="94" y="675" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="start">Phase 5 · Dropshipping</text>
+<text x="94" y="694" font-size="12" fill="#38bdf8" font-weight="400" text-anchor="start">not built yet</text>
+<rect x="94" y="708" width="80.48" height="23" rx="11.5" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="134.24" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Suppliers</text>
+<rect x="182.48000000000002" y="708" width="134.24" height="23" rx="11.5" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="249.60000000000002" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Supplier products</text>
+<rect x="94" y="738" width="134.24" height="23" rx="11.5" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="161.12" y="754" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Reseller products</text>
+<rect x="94" y="768" width="93.92" height="23" rx="11.5" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="140.96" y="784" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Fulfilments</text>
+<rect x="354" y="650" width="258" height="146" rx="10" fill="#16213a" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="368" y="675" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="start">Phase 6 · WhatsApp marketing</text>
+<text x="368" y="694" font-size="12" fill="#64748b" font-weight="400" text-anchor="start">default-deny until scoped</text>
+<rect x="368" y="708" width="73.76" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="404.88" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Contacts</text>
+<rect x="449.76" y="708" width="80.48" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="490" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Campaigns</text>
+<rect x="368" y="738" width="87.2" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="411.6" y="754" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Recipients</text>
+<rect x="463.2" y="738" width="107.36000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="516.88" y="754" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Notifications</text>
+<rect x="628" y="650" width="532" height="146" rx="10" fill="#16213a" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="642" y="675" font-size="14.5" fill="#e2e8f0" font-weight="600" text-anchor="start">CRM · Creative · Integrations</text>
+<text x="642" y="694" font-size="12" fill="#64748b" font-weight="400" text-anchor="start">default-deny until scoped</text>
+<rect x="642" y="708" width="107.36000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="695.6800000000001" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">CRM customers</text>
+<rect x="757.36" y="708" width="53.6" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="784.16" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Leads</text>
+<rect x="818.96" y="708" width="93.92" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="865.9200000000001" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Creative ×4</text>
+<rect x="920.88" y="708" width="100.64000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="971.2" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Integrations</text>
+<rect x="1029.52" y="708" width="114.08000000000001" height="23" rx="11.5" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="1086.56" y="724" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">Webhook events</text>
+<rect x="1220" y="290" width="320" height="150" rx="10" fill="#16213a" stroke="#fbbf24" stroke-width="1.2"/>
+<text x="1234" y="314" font-size="14.5" fill="#fbbf24" font-weight="600" text-anchor="start">Redis · BullMQ</text>
+<text x="1234" y="334" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Queues: email · whatsapp · sms</text>
+<text x="1234" y="351" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Workers (processors) with retries</text>
+<text x="1234" y="368" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Keeps slow sends out of requests</text>
+<polyline points="1180,365 1218,365" fill="none" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#arrow-fbbf24)"/>
+<text x="1199" y="357" font-size="11.5" fill="#fbbf24" font-weight="400" text-anchor="middle">jobs</text>
+<polyline points="1240,440 1240,650" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+<polyline points="1240,490 1258,490" fill="none" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#arrow-fbbf24)"/>
+<rect x="1260" y="462" width="280" height="56" rx="10" fill="#16213a" stroke="#fbbf24" stroke-width="1.2"/>
+<text x="1276" y="486" font-size="14" fill="#fbbf24" font-weight="600" text-anchor="start">Resend</text>
+<text x="1276" y="505" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">transactional email</text>
+<polyline points="1240,560 1258,560" fill="none" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#arrow-fbbf24)"/>
+<rect x="1260" y="532" width="280" height="56" rx="10" fill="#16213a" stroke="#fbbf24" stroke-width="1.2"/>
+<text x="1276" y="556" font-size="14" fill="#fbbf24" font-weight="600" text-anchor="start">WhatsApp Cloud API</text>
+<text x="1276" y="575" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">messages &amp; order updates</text>
+<polyline points="1240,630 1258,630" fill="none" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#arrow-fbbf24)"/>
+<rect x="1260" y="602" width="280" height="56" rx="10" fill="#16213a" stroke="#fbbf24" stroke-width="1.2"/>
+<text x="1276" y="626" font-size="14" fill="#fbbf24" font-weight="600" text-anchor="start">SMS provider</text>
+<text x="1276" y="645" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">OTP &amp; notifications</text>
+<polyline points="1260,586 1182,586" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arrow-94a3b8)"/>
+<text x="1260" y="690" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="start">↩ inbound webhooks (delivery status, customer</text>
+<text x="1260" y="707" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="start">    messages) → /api/webhook-events, deduped</text>
+<rect x="1220" y="734" width="320" height="78" rx="10" fill="#16213a" stroke="#94a3b8" stroke-width="1.2"/>
+<text x="1234" y="758" font-size="14.5" fill="#94a3b8" font-weight="600" text-anchor="start">Sentry · NestJS Observe</text>
+<text x="1234" y="778" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">errors, traces &amp; metrics</text>
+<polyline points="1180,773 1218,773" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arrow-94a3b8)"/>
+<polyline points="620,812 620,858" fill="none" stroke="#2dd4bf" stroke-width="1.8" marker-end="url(#arrow-2dd4bf)"/>
+<text x="634" y="840" font-size="12.5" fill="#2dd4bf" font-weight="400" text-anchor="start">Prisma ORM (connects as table owner)</text>
+<rect x="60" y="860" width="1480" height="156" rx="10" fill="#111a2e" stroke="#26344f" stroke-width="1.2"/>
+<text x="80" y="886" font-size="11.5" fill="#94a3b8" font-weight="600" text-anchor="start" letter-spacing="1.4">DATA  ·  SUPABASE</text>
+<rect x="80" y="898" width="720" height="102" rx="10" fill="#16213a" stroke="#2dd4bf" stroke-width="1.2"/>
+<text x="94" y="922" font-size="14.5" fill="#2dd4bf" font-weight="600" text-anchor="start">PostgreSQL · 34 Prisma models</text>
+<text x="94" y="942" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Every store belongs to a business · tenant data keyed by businessId · memberships carry roles</text>
+<text x="94" y="959" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Row-level security ON for every table, no policies → Supabase Data API (anon key) sees nothing;</text>
+<text x="94" y="976" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">the API (table owner) bypasses RLS, so app-level tenant checks are the primary control</text>
+<rect x="820" y="898" width="330" height="102" rx="10" fill="#16213a" stroke="#2dd4bf" stroke-width="1.2"/>
+<text x="834" y="922" font-size="14.5" fill="#2dd4bf" font-weight="600" text-anchor="start">Supabase Storage</text>
+<text x="834" y="942" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">File bytes (logos, product images, creatives)</text>
+<text x="834" y="959" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">Metadata rows in file_assets</text>
+<rect x="1170" y="898" width="350" height="102" rx="10" fill="#16213a" stroke="#2dd4bf" stroke-width="1.2"/>
+<text x="1184" y="922" font-size="14.5" fill="#2dd4bf" font-weight="600" text-anchor="start">Prisma migrations</text>
+<text x="1184" y="942" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">20261031 init · 20261105 platform_role</text>
+<text x="1184" y="959" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">20261105 enable_rls</text>
+<text x="1184" y="976" font-size="12.2" fill="#94a3b8" font-weight="400" text-anchor="start">20261106 align_store_mvp</text>
+<rect x="60" y="1049" width="26" height="16" rx="4" fill="none" stroke="#34d399" stroke-width="1.6"/>
+<text x="96" y="1062" font-size="12.5" fill="#94a3b8" font-weight="400" text-anchor="start">access rules enforced</text>
+<rect x="277" y="1049" width="26" height="16" rx="4" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="6 5"/>
+<text x="313" y="1062" font-size="12.5" fill="#94a3b8" font-weight="400" text-anchor="start">blocked (403) until its phase adds rules</text>
+<rect x="627" y="1049" width="26" height="16" rx="4" fill="none" stroke="#a78bfa" stroke-width="1.6"/>
+<text x="663" y="1062" font-size="12.5" fill="#94a3b8" font-weight="400" text-anchor="start">auth &amp; security</text>
+<rect x="802" y="1049" width="26" height="16" rx="4" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+<text x="838" y="1062" font-size="12.5" fill="#94a3b8" font-weight="400" text-anchor="start">async jobs &amp; providers</text>
+<rect x="1026" y="1049" width="26" height="16" rx="4" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="6 5"/>
+<text x="1062" y="1062" font-size="12.5" fill="#94a3b8" font-weight="400" text-anchor="start">not built yet</text>
+<text x="60" y="1094" font-size="12.5" fill="#64748b" font-weight="400" text-anchor="start">Orders: NEW → CONFIRMED → PREPARING → READY → DISPATCHED → DELIVERED / CANCELLED; payment agreed on WhatsApp, off-platform. Business roles: OWNER &gt; ADMIN &gt; MANAGER &gt; EMPLOYEE &gt; VIEWER.</text>
+</svg>
