@@ -1,0 +1,21 @@
+{
+  "name": "ABUUR Digital",
+  "short_name": "ABUUR",
+  "description": "Online stores, WhatsApp ordering and order management for Somali businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050a14",
+  "theme_color": "#0d6efd",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/brand/abuur-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "shopping", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}

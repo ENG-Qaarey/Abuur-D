@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "abuur-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "Abuur", "run", "dev"],
+      "port": 3001
+    }
+  ]
+}
