@@ -7,18 +7,19 @@ const COLUMNS = [
   {
     title: "Platform",
     links: [
-      { label: "Online Store Builder", href: `${routes.features}#store` },
-      { label: "Product Management", href: `${routes.features}#products` },
-      { label: "WhatsApp Ordering", href: `${routes.features}#whatsapp` },
-      { label: "Order Dashboard", href: `${routes.features}#orders` },
+      { label: "Online Store Builder", href: `${routes.services}#store` },
+      { label: "Product Management", href: `${routes.services}#products` },
+      { label: "WhatsApp Ordering", href: `${routes.services}#whatsapp` },
+      { label: "Order Dashboard", href: `${routes.services}#orders` },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About Us", href: routes.about },
+      { label: "Stores", href: routes.stores },
+      { label: "Solutions", href: routes.solutions },
       { label: "Pricing", href: routes.pricing },
-      { label: "How It Works", href: routes.howItWorks },
       { label: "FAQ", href: "/#faq" },
     ],
   },
@@ -39,7 +40,7 @@ export function Footer() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cl-blue/60 to-transparent" />
       <div className="cl-container grid gap-12 py-16 lg:grid-cols-[1.3fr_2fr]">
         <div>
-          <Logo />
+          <Logo height={56} />
           <p className="site-footer__text mt-5 max-w-sm text-sm leading-relaxed">
             Online stores, WhatsApp ordering and order management built for Somali businesses.
           </p>

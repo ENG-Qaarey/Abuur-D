@@ -24,20 +24,27 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_SO",
     siteName: "ABUUR Digital",
+    images: [{ url: "/brand/sprout/og-image.png", width: 1200, height: 630, alt: "ABUUR Digital" }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    images: ["/brand/sprout/og-image.png"],
   },
   icons: {
-    icon: "/brand/abuur-mark.svg",
+    icon: [
+      { url: "/brand/sprout/favicon.ico", sizes: "any" },
+      { url: "/brand/sprout/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/brand/sprout/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
 };
 
 const themeInitScript = `
 (function(){
+  document.documentElement.classList.add('js');
   try {
     var stored = localStorage.getItem('abuur-theme');
     var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;

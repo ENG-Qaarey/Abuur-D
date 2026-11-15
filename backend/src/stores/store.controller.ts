@@ -11,7 +11,8 @@ import {
 import { StoreService } from './store.service.js';
 import type { Prisma } from '../prisma/prisma.service.js';
 
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { Public } from '../auth/decorators/auth.decorators.js';
 @Controller('stores')
 @ApiBearerAuth()
 export class StoreController {
@@ -20,6 +21,14 @@ export class StoreController {
   @Post()
   create(@Body() dto: Prisma.StoreCreateInput) {
     return this.storeService.create(dto);
+  }
+
+  /** Declared before ':id' so "public" is not parsed as a store id. */
+  @Get('public')
+  @Public()
+  @ApiOperation({ summary: 'Public directory of live stores (safe fields only)' })
+  findPublic() {
+    return this.storeService.findPublic();
   }
 
   @Get()

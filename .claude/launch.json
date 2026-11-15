@@ -4,7 +4,7 @@
     {
       "name": "abuur-web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "Abuur", "run", "dev"],
+      "runtimeArgs": ["--prefix", "web", "run", "dev"],
       "port": 3001
     }
   ]

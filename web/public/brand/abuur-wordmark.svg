@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204 64" role="img" aria-label="ABUUR">
+<g fill="none" stroke="#0B1F4B" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8 52L23 16L38 52"/>
+  <path d="M55 34H66A9 9 0 0 1 66 52H55V16H64A9 9 0 0 1 64 34"/>
+  <path d="M92 16V40A12 12 0 0 0 116 40V16"/>
+  <path d="M174 52V16H184A9 9 0 0 1 184 34H174M183 34L193 52"/>
+</g>
+<circle cx="23" cy="42" r="4" fill="#0D6EFD"/>
+<path d="M135 19C135 5 155 5 155 19" fill="none" stroke="#0D6EFD" stroke-width="4" stroke-linecap="round"/>
+<path d="M131.5 17H158.5A3 3 0 0 1 161.5 20V40A16.5 16.5 0 0 1 128.5 40V20A3 3 0 0 1 131.5 17Z" fill="#0D6EFD"/>
+<path d="M139 37L143.5 41.5L151.5 32.5" fill="none" stroke="#fff" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></svg>

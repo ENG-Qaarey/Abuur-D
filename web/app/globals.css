@@ -935,3 +935,559 @@ html.light .abuur-section-glow {
 html.light .abuur-step-number {
   -webkit-text-stroke-color: rgba(13, 110, 253, 0.35);
 }
+
+/* ---------------------------------------------------------------- GSAP motion */
+
+/* Hero parts wait hidden for the GSAP entrance (see hero-motion.tsx). Only when JS
+   is running (html.js, set by the theme-init script) and motion is allowed. The
+   failsafe reveals them after 3s in case the script never runs. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-hero="pill"],
+  html.js [data-hero="title"],
+  html.js [data-hero="sub"],
+  html.js [data-hero="cta"],
+  html.js [data-hero="show"] {
+    visibility: hidden;
+    animation: abuur-hero-failsafe 0s linear 3s forwards;
+  }
+  html.js [data-hero-word] {
+    animation: abuur-word-failsafe 0s linear 3s forwards;
+  }
+}
+
+@keyframes abuur-word-failsafe {
+  to {
+    transform: none;
+  }
+}
+
+/* CSS animations outrank inline styles, so this also overrides a stalled GSAP
+   tween's inline opacity/visibility. It fires 3s after load, after the ~2.5s
+   entrance has finished, so it never interrupts a running timeline. */
+@keyframes abuur-hero-failsafe {
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* Order story: list layout by default (no JS, mobile, reduced motion);
+   story-motion.tsx switches to the pinned layout with data-mode="pin". */
+.order-story [data-story-pin] {
+  display: none;
+}
+.order-story[data-mode="pin"] [data-story-pin] {
+  display: block;
+}
+.order-story[data-mode="pin"] [data-story-list] {
+  display: none;
+}
+
+/* How it works: the ring around each step dot matches the section background. */
+.order-steps {
+  --steps-bg: var(--cl-main);
+}
+html.light .order-steps {
+  --steps-bg: var(--cl-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Hero storefront showcase
+   --------------------------------------------------------------------------- */
+:root {
+  --showcase-bg: #0a1222;
+}
+html.light {
+  --showcase-bg: #ffffff;
+}
+
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* A bright arc travels around the window's border. */
+.showcase-beam {
+  background:
+    conic-gradient(from var(--beam-angle), transparent 0deg 250deg, #0d6efd 290deg, #25d366 325deg, transparent 360deg),
+    var(--cl-border);
+  animation: beam-spin 6s linear infinite;
+}
+@keyframes beam-spin {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+.showcase-product {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+@media (hover: hover) {
+  .showcase-product:hover {
+    transform: translateY(-4px);
+    border-color: rgb(13 110 253 / 55%);
+    box-shadow: 0 16px 30px -14px rgb(13 110 253 / 55%);
+  }
+}
+
+/* Light sweep across the WhatsApp button. */
+.showcase-wa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 45%) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: wa-sweep 3.2s ease-in-out infinite;
+}
+@keyframes wa-sweep {
+  60%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-beam,
+  .showcase-wa::after {
+    animation: none;
+  }
+  .showcase-product {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Navbar
+   --------------------------------------------------------------------------- */
+:root {
+  --nav-glass: rgb(5 10 20 / 72%);
+}
+html.light {
+  --nav-glass: rgb(255 255 255 / 82%);
+}
+
+.nav-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 9999px;
+  background: var(--cl-blue);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 8px 24px -8px rgb(13 110 253 / 75%), inset 0 1px 0 rgb(255 255 255 / 25%);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.nav-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 35%) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+@media (hover: hover) {
+  .nav-cta:hover {
+    background: var(--cl-blue-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px -8px rgb(13 110 253 / 90%), inset 0 1px 0 rgb(255 255 255 / 25%);
+  }
+  .nav-cta:hover::after {
+    transform: translateX(120%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-cta,
+  .nav-cta::after {
+    transition: none;
+  }
+}
+
+/* Logo: dark-theme artwork by default, light artwork when html.light is set. */
+.brand-on-light {
+  display: none;
+}
+html.light .brand-on-light {
+  display: block;
+}
+html.light .brand-on-dark {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Authentication (login, register, forgot password)
+   Brand tokens are scoped to .auth-root; light by default, dark when the site is dark.
+   --------------------------------------------------------------------------- */
+.auth-root {
+  --a-bg: #ffffff;
+  --a-surface: #f8fafc;
+  --a-text: #10213f;
+  --a-muted: #5f6f8a; /* #718096 darkened slightly for 4.5:1 contrast on white */
+  --a-border: #e5eaf2;
+  --a-border-strong: #cfd8e6;
+  --a-input: #ffffff;
+  --a-primary: #1677f8;
+  --a-primary-hover: #0f66dc;
+  --a-primary-soft: #eaf3ff;
+  --a-ring: rgb(22 119 248 / 18%);
+  --a-success: #16a36a;
+  --a-error: #dc4545;
+}
+html:not(.light) .auth-root {
+  --a-bg: #0b1324;
+  --a-surface: #101b31;
+  --a-text: #e8eef8;
+  --a-muted: #9aabc6;
+  --a-border: #22314d;
+  --a-border-strong: #31446a;
+  --a-input: #0f1a2f;
+  --a-primary: #3b8bff;
+  --a-primary-hover: #5a9dff;
+  --a-primary-soft: rgb(59 139 255 / 12%);
+  --a-ring: rgb(59 139 255 / 25%);
+  --a-success: #2fbf85;
+  --a-error: #f06a6a;
+}
+
+/* Brand panel: deep navy with a restrained blue lift. */
+.auth-brand {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 0%, rgb(22 119 248 / 22%), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgb(37 139 250 / 12%), transparent 70%),
+    #071a3b;
+}
+
+/* Ecosystem chips float very slightly. */
+.auth-eco__node {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 12px;
+  background: rgb(11 37 82 / 85%);
+  padding: 0.45rem 0.85rem 0.45rem 0.45rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e6eefb;
+  box-shadow: 0 8px 24px -12px rgb(0 0 0 / 50%);
+  animation: auth-float 7s ease-in-out infinite;
+}
+@keyframes auth-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Entrance: short fade/rise when the page or tab changes. */
+.auth-enter {
+  animation: auth-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes auth-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Links */
+.auth-link {
+  font-weight: 500;
+  color: var(--a-primary);
+  border-radius: 4px;
+  transition: color 150ms ease;
+}
+.auth-link:hover {
+  color: var(--a-primary-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.auth-link-muted {
+  color: var(--a-muted);
+  border-radius: 6px;
+  transition: color 150ms ease;
+}
+.auth-link-muted:hover {
+  color: var(--a-text);
+}
+.auth-root a:focus-visible,
+.auth-root button:focus-visible {
+  outline: 2px solid var(--a-primary);
+  outline-offset: 2px;
+}
+
+/* Segmented tabs with a sliding indicator. */
+.auth-tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--a-surface);
+  border: 1px solid var(--a-border);
+}
+.auth-tabs__indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 7px;
+  background: var(--a-input);
+  box-shadow: 0 1px 2px rgb(16 33 63 / 8%), 0 0 0 1px var(--a-border);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.auth-tabs[data-active="register"] .auth-tabs__indicator {
+  transform: translateX(100%);
+}
+.auth-tabs__tab {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--a-muted);
+  border-radius: 7px;
+  transition: color 180ms ease;
+}
+.auth-tabs__tab[aria-current="page"] {
+  color: var(--a-text);
+  font-weight: 600;
+}
+.auth-tabs__tab:not([aria-current="page"]):hover {
+  color: var(--a-text);
+}
+
+/* Inputs */
+.auth-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  background: var(--a-input);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.auth-input:hover {
+  border-color: var(--a-border-strong);
+}
+.auth-input:focus-within {
+  border-color: var(--a-primary);
+  box-shadow: 0 0 0 3px var(--a-ring);
+}
+.auth-input[data-invalid] {
+  border-color: var(--a-error);
+}
+.auth-input[data-invalid]:focus-within {
+  box-shadow: 0 0 0 3px rgb(220 69 69 / 18%);
+}
+.auth-input__icon {
+  position: absolute;
+  left: 14px;
+  color: var(--a-muted);
+  pointer-events: none;
+  transition: color 150ms ease;
+}
+.auth-input:focus-within .auth-input__icon {
+  color: var(--a-primary);
+}
+.auth-input input {
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0 12px 0 40px;
+  font-size: 15px;
+  color: var(--a-text);
+  outline: none;
+}
+.auth-input input::placeholder {
+  color: var(--a-muted);
+  opacity: 0.75;
+}
+.auth-input input:-webkit-autofill,
+.auth-input input:-webkit-autofill:hover,
+.auth-input input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--a-text);
+  caret-color: var(--a-text);
+  transition: background-color 600000s ease-in-out 0s;
+}
+.auth-input__toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-right: 5px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  color: var(--a-muted);
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.auth-input__toggle:hover {
+  background: var(--a-surface);
+  color: var(--a-text);
+}
+.auth-eye {
+  position: absolute;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.auth-eye[data-hidden] {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+/* Checkbox (native semantics, custom look) */
+.auth-check {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  border: 1.5px solid var(--a-border-strong);
+  border-radius: 4px;
+  background: var(--a-input);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.auth-check::after {
+  content: "";
+  width: 8px;
+  height: 4.5px;
+  margin-top: -2px;
+  border: 2px solid #fff;
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(-45deg) scale(0);
+  transition: transform 150ms ease;
+}
+.auth-check:checked {
+  background: var(--a-primary);
+  border-color: var(--a-primary);
+}
+.auth-check:checked::after {
+  transform: rotate(-45deg) scale(1);
+}
+.auth-check[aria-invalid="true"] {
+  border-color: var(--a-error);
+}
+.auth-check:focus-visible {
+  outline: 2px solid var(--a-primary);
+  outline-offset: 2px;
+}
+
+/* Primary button */
+.auth-button {
+  display: flex;
+  height: 46px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  background: var(--a-primary);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+.auth-button:hover:not(:disabled) {
+  background: var(--a-primary-hover);
+  box-shadow: 0 6px 16px -8px rgb(22 119 248 / 70%);
+}
+.auth-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+/* Alerts */
+.auth-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid;
+  padding: 0.7rem 0.85rem;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.auth-alert[data-tone="error"] {
+  border-color: rgb(220 69 69 / 30%);
+  background: rgb(220 69 69 / 8%);
+  color: var(--a-text);
+}
+.auth-alert[data-tone="error"] svg {
+  color: var(--a-error);
+}
+.auth-alert[data-tone="success"] {
+  border-color: rgb(22 163 106 / 30%);
+  background: rgb(22 163 106 / 8%);
+  color: var(--a-text);
+}
+.auth-alert[data-tone="success"] svg {
+  color: var(--a-success);
+}
+
+/* Password strength (appears once typing starts) */
+.auth-strength {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 200ms ease, opacity 200ms ease;
+}
+.auth-strength > div {
+  overflow: hidden;
+}
+.auth-strength[data-open] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.auth-strength__bar {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--a-border);
+  transition: background-color 200ms ease;
+}
+.auth-strength__label {
+  width: 4.5rem;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--a-muted);
+}
+.auth-strength[data-score="0"] .auth-strength__bar[data-on] { background: var(--a-error); }
+.auth-strength[data-score="1"] .auth-strength__bar[data-on] { background: #f08a3c; }
+.auth-strength[data-score="2"] .auth-strength__bar[data-on] { background: #e8b931; }
+.auth-strength[data-score="3"] .auth-strength__bar[data-on],
+.auth-strength[data-score="4"] .auth-strength__bar[data-on] { background: var(--a-success); }
+.auth-strength[data-score="0"] .auth-strength__label { color: var(--a-error); }
+.auth-strength[data-score="3"] .auth-strength__label,
+.auth-strength[data-score="4"] .auth-strength__label { color: var(--a-success); }
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-enter,
+  .auth-eco__node {
+    animation: none;
+  }
+  .auth-tabs__indicator,
+  .auth-strength,
+  .auth-eye,
+  .auth-check::after {
+    transition: none;
+  }
+}
+

@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState, useSyncExternalStore } from "react";
+import { CLAIM_KEY } from "@/components/landing/claim-link";
 import { createBusinessAction } from "@/lib/actions/business";
 import { IDLE } from "@/lib/types";
 import { FormMessage } from "@/components/ui/form-message";
@@ -14,12 +15,37 @@ function slugify(value: string): string {
     .slice(0, 60);
 }
 
+const subscribeNoop = () => () => {};
+
+function readClaimedName(): string | null {
+  try {
+    const claimed = JSON.parse(localStorage.getItem(CLAIM_KEY) ?? "null") as { name?: string } | null;
+    return claimed?.name ? claimed.name.slice(0, 120) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function CreateBusinessForm() {
   const [state, formAction, pending] = useActionState(createBusinessAction, IDLE);
-  const [name, setName] = useState("");
+  const [typedName, setName] = useState<string | null>(null);
   const [slug, setSlug] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
+
+  // Name claimed with "Claim your link" on the home page (null on the server, so HTML matches).
+  const claimedName = useSyncExternalStore(subscribeNoop, readClaimedName, () => null);
+  const name = typedName ?? claimedName ?? "";
   const shownSlug = slugTouched ? slug : slugify(name);
+
+  // The hand-off is one-time: forget it once the business is created.
+  useEffect(() => {
+    if (state.status !== "success") return;
+    try {
+      localStorage.removeItem(CLAIM_KEY);
+    } catch {
+      // Storage blocked: nothing to clear.
+    }
+  }, [state]);
 
   // After a successful create, start the next form fresh. The uncontrolled
   // fields are cleared by remounting the form via its key.

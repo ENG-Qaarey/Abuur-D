@@ -1,3 +1,5 @@
+import { HeroBackdrop } from "./hero-backdrop";
+
 type PageHeroProps = {
   label?: string;
   title: string;
@@ -9,11 +11,7 @@ type PageHeroProps = {
 export function PageHero({ label, title, subtitle, children }: PageHeroProps) {
   return (
     <section className="page-hero relative -mt-[4.75rem] overflow-hidden pt-[4.75rem]">
-      <div className="hero-bg absolute inset-0" aria-hidden>
-        <div className="hero-bg__gradient" />
-      </div>
-      <div className="abuur-grid-bg pointer-events-none absolute inset-0" aria-hidden />
-      <div className="abuur-glow -top-[260px] !h-[420px] opacity-70" aria-hidden />
+      <HeroBackdrop />
       <div className="cl-container relative z-[1] flex flex-col items-center py-16 text-center sm:py-20 lg:py-24">
         {label && <span className="abuur-pill">{label}</span>}
         <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">

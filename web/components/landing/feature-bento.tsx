@@ -273,7 +273,7 @@ export function FeatureBento() {
         icon={Store}
         title="Online Store Builder"
         text="Your own storefront with your name, logo and a link to share on WhatsApp, TikTok and Facebook."
-        href={`${routes.features}#store`}
+        href={`${routes.services}#store`}
         delay={0}
       >
         <StorefrontVisual />
@@ -283,7 +283,7 @@ export function FeatureBento() {
         icon={MessageCircle}
         title="WhatsApp Ordering"
         text="Customers fill a cart and send the whole order to your WhatsApp in one tap."
-        href={`${routes.features}#whatsapp`}
+        href={`${routes.services}#whatsapp`}
         delay={0.08}
       >
         <WhatsAppVisual />
@@ -293,7 +293,7 @@ export function FeatureBento() {
         icon={Boxes}
         title="Products"
         text="Prices, photos, categories and stock."
-        href={`${routes.features}#products`}
+        href={`${routes.services}#products`}
         delay={0.16}
       >
         <ProductsVisual />
@@ -303,7 +303,7 @@ export function FeatureBento() {
         icon={ClipboardList}
         title="Order Dashboard"
         text="Move every order from New to Delivered."
-        href={`${routes.features}#orders`}
+        href={`${routes.services}#orders`}
         delay={0.24}
       >
         <StatusVisual />
@@ -313,7 +313,7 @@ export function FeatureBento() {
         icon={Users}
         title="Your Team"
         text="Owners, managers and staff, each with the right access."
-        href={`${routes.features}#orders`}
+        href={`${routes.services}#orders`}
         delay={0.32}
       >
         <TeamVisual />

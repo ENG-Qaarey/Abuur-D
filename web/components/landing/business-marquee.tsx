@@ -34,7 +34,7 @@ export function BusinessMarquee() {
   const items = [...KINDS, ...KINDS];
   return (
     <section aria-label="Types of businesses that sell with ABUUR" className="section-main py-10">
-      <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-cl-muted">
+      <p className="text-center text-sm font-medium text-cl-muted">
         Made for every kind of shop
       </p>
       <div className="abuur-marquee mt-6 overflow-hidden">
