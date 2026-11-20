@@ -1,7 +1,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": ".open-next/worker.js",
-	"name": "abuur-web",
+	"name": "abuur-d",
 	"compatibility_date": "2026-11-01",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"assets": {
@@ -12,7 +12,7 @@
 		{
 			// Self-reference service binding; must match the worker name above
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "abuur-web"
+			"service": "abuur-d"
 		}
 	],
 	"images": {

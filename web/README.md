@@ -32,7 +32,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deploying to Cloudflare
 
-This app deploys to Cloudflare Workers (Worker `abuur-web`) through the OpenNext adapter.
+This app deploys to Cloudflare Workers (Worker `abuur-d`) through the OpenNext adapter.
 Cloudflare Workers Builds runs these from the `web` folder on every push to the production branch:
 
 - Build: `npx opennextjs-cloudflare build`
