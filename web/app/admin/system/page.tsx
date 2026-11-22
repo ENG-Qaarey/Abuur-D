@@ -24,7 +24,7 @@ export default async function SystemHealthPage() {
   const checkedAt = new Intl.DateTimeFormat("en-GB", { timeStyle: "medium", timeZone: "Africa/Mogadishu" }).format(new Date());
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="System Health" subtitle={`Live checks of the backend, database and services. Checked at ${checkedAt} (Mogadishu).`} />
       <KpiGrid
         items={[

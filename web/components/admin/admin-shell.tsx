@@ -89,7 +89,7 @@ function CommandSearch() {
       {open && results.length > 0 && (
         <ul className="absolute left-0 right-0 top-12 z-50 overflow-hidden rounded-xl border border-cl-border bg-cl-card py-1 shadow-lg">
           {results.map(({ href, label, group, icon: Icon }) => (
-            <li key={href}>
+            <li key={`${group}-${href}-${label}`}>
               <button
                 type="button"
                 onMouseDown={(e) => e.preventDefault()}
@@ -158,7 +158,7 @@ export function AdminShell({
               {group.items.map(({ label, href, icon: Icon }) => {
                 const active = href === current;
                 return (
-                  <li key={href}>
+                  <li key={`${group.title}-${href}-${label}`}>
                     <Link
                       href={href}
                       onClick={() => setOpen(false)}

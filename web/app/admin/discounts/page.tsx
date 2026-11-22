@@ -6,7 +6,7 @@ import { requireSuperAdmin } from "@/lib/admin";
 export default async function DiscountsPage() {
   await requireSuperAdmin();
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Coupons & Discounts" subtitle="Promotional codes and discounts on ABUUR plans." />
       <SubTabs tabs={TABS.plans} />
       <NotConnected

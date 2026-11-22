@@ -46,7 +46,7 @@ const SECTIONS = [
 export default async function SettingsPage() {
   await requireSuperAdmin();
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Platform Settings" subtitle="Platform-wide configuration. Read-only until a settings API exists." />
       <div className="grid gap-5 lg:grid-cols-2">
         {SECTIONS.map((s) => (

@@ -13,7 +13,7 @@ import {
   Store,
   Users,
   Wallet,
-} from "lucide-react";
+} from "./icons";
 import { Button } from "@/components/ui/button";
 import {
   MotionSection,

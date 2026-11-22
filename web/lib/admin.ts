@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { api, type ApiResult } from "./api";
 import { getCurrentUser, getToken } from "./session";
-import type { AdminBusiness, AdminUser, ContactMessage, Plan, SessionUser } from "./types";
+import type { AdminAuditLog, AdminBusiness, AdminFinanceTransaction, AdminPayment, AdminSubscription, AdminUser, ContactMessage, Plan, SessionUser } from "./types";
 
 /**
  * Gate for every /admin page and action. The backend only lets SUPER_ADMIN
@@ -22,9 +22,18 @@ function unwrap<T>(result: ApiResult<T>, fallback: T): Loaded<T> {
   return { data: fallback, error: result.message };
 }
 
-export async function loadBusinesses(token: string, status?: string): Promise<Loaded<{ total: number; items: AdminBusiness[] }>> {
-  const q = new URLSearchParams({ take: "100" });
+export async function loadBusinesses(
+  token: string,
+  status?: string,
+  options: { take?: number; skip?: number; q?: string; industry?: string; from?: string; to?: string } = {},
+): Promise<Loaded<{ total: number; items: AdminBusiness[] }>> {
+  const q = new URLSearchParams({ take: String(options.take ?? 100) });
+  if (options.skip !== undefined) q.set("skip", String(options.skip));
   if (status) q.set("status", status);
+  if (options.q) q.set("q", options.q);
+  if (options.industry) q.set("industry", options.industry);
+  if (options.from) q.set("from", options.from);
+  if (options.to) q.set("to", options.to);
   return unwrap(await api<{ total: number; items: AdminBusiness[] }>(`/businesses/admin/list?${q}`, { token }), {
     total: 0,
     items: [],
@@ -45,7 +54,33 @@ export async function loadPlans(): Promise<Loaded<Plan[]>> {
   return result.ok ? { data: result.data } : { data: [], error: `Plans could not be loaded (HTTP ${result.status}).` };
 }
 
-export const ROLE_NAME = { USER: "Business user", ABUUR_STAFF: "ABUUR staff", SUPER_ADMIN: "Super admin" } as const;
+export async function loadSubscriptions(token: string): Promise<Loaded<AdminSubscription[]>> {
+  return unwrap(await api<AdminSubscription[]>("/subscriptions?take=100", { token }), []);
+}
+
+export async function loadPayments(token: string): Promise<Loaded<AdminPayment[]>> {
+  return unwrap(await api<AdminPayment[]>("/payments?take=100", { token }), []);
+}
+
+export async function loadAuditLogs(token: string): Promise<Loaded<AdminAuditLog[]>> {
+  return unwrap(await api<AdminAuditLog[]>("/audit-logs?take=100", { token }), []);
+}
+
+export async function loadFinanceTransactions(token: string): Promise<Loaded<AdminFinanceTransaction[]>> {
+  return unwrap(await api<AdminFinanceTransaction[]>("/finance-transactions?take=100", { token }), []);
+}
+
+export const ROLE_NAME: Record<import("./types").PlatformRole, string> = {
+  USER: "Business user",
+  ABUUR_STAFF: "ABUUR staff",
+  SUPER_ADMIN: "Super admin",
+  OWNER: "Business owner",
+  STAFF: "Staff",
+  DESIGNER: "Designer",
+  MARKETING_MANAGER: "Marketing manager",
+  STORE_MANAGER: "Store manager",
+  FINANCE_MANAGER: "Finance manager",
+};
 
 export const fullName =(p: { firstName: string | null; lastName: string | null; email: string | null }) =>
   [p.firstName, p.lastName].filter(Boolean).join(" ") || p.email || "Unnamed";

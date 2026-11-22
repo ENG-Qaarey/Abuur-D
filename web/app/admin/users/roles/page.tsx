@@ -9,16 +9,32 @@ const ROLE_ABOUT: Record<PlatformRole, string> = {
   USER: "Business owners and their team members. Access only their own businesses.",
   ABUUR_STAFF: "ABUUR team members. No Super Admin console access.",
   SUPER_ADMIN: "Controls the whole ABUUR platform from this console.",
+  OWNER: "Owns and administers a registered business.",
+  STAFF: "Works inside a business with assigned operational access.",
+  DESIGNER: "Creates and manages creative projects.",
+  MARKETING_MANAGER: "Runs marketing campaigns and customer outreach.",
+  STORE_MANAGER: "Manages store products, inventory and orders.",
+  FINANCE_MANAGER: "Manages invoices, payments and financial reporting.",
 };
 
 export default async function UserRolesPage() {
   const { token } = await requireSuperAdmin();
   const users = await loadUsers(token);
   const by = (role: PlatformRole) => users.data.filter((u) => u.platformRole === role);
-  const roles: PlatformRole[] = ["SUPER_ADMIN", "ABUUR_STAFF", "USER"];
+  const roles: PlatformRole[] = [
+    "SUPER_ADMIN",
+    "OWNER",
+    "STAFF",
+    "DESIGNER",
+    "MARKETING_MANAGER",
+    "STORE_MANAGER",
+    "FINANCE_MANAGER",
+    "ABUUR_STAFF",
+    "USER",
+  ];
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="User Roles" subtitle="Platform roles assigned to accounts. Role changes are made in the backend for now." />
       <SubTabs tabs={TABS.users} />
       <ErrorNote message={users.error} />

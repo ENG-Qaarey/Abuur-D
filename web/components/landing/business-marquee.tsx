@@ -11,7 +11,7 @@ import {
   Sparkles,
   UtensilsCrossed,
   Wrench,
-} from "lucide-react";
+} from "./icons";
 
 /** The kinds of shops ABUUR is built for, not customer logos. */
 const KINDS = [

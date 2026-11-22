@@ -12,7 +12,8 @@ import type { AuthMode } from "./auth-form";
 const HEADER: Record<AuthMode, { title: string; text: string }> = {
   login: { title: "Welcome back", text: "Sign in to continue managing your business." },
   register: { title: "Create your business account", text: "Start building and managing your business with ABUUR." },
-  forgot: { title: "Forgot your password?", text: "Enter your email address and we'll help you recover access to your account." },
+  forgot: { title: "Forgot your password?", text: "Enter your email address and we'll send you a link to reset your password." },
+  reset: { title: "Set a new password", text: "Choose a new password for your ABUUR account." },
 };
 
 const BENEFITS = ["Your online store", "Orders and customers", "One connected dashboard"];
@@ -94,7 +95,7 @@ function BrandPanel() {
 }
 
 /**
- * Shared frame for /login, /register and /forgot-password. It stays mounted between them,
+ * Shared frame for /login, /register, /forgot-password and /reset-password. It stays mounted between them,
  * so the tab indicator slides and only the form content changes.
  */
 export function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -103,7 +104,9 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
     ? "register"
     : pathname.startsWith(routes.forgotPassword)
       ? "forgot"
-      : "login";
+      : pathname.startsWith(routes.resetPassword)
+        ? "reset"
+        : "login";
   const header = HEADER[mode];
 
   return (
@@ -131,7 +134,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
             <p className="mt-2 text-[15px] leading-relaxed text-[var(--a-muted)]">{header.text}</p>
           </div>
 
-          {mode !== "forgot" && (
+          {(mode === "login" || mode === "register") && (
             <nav aria-label="Account" className="auth-tabs mt-7" data-active={mode}>
               <span className="auth-tabs__indicator" aria-hidden />
               <Link href={routes.login} aria-current={mode === "login" ? "page" : undefined} scroll={false} className="auth-tabs__tab">

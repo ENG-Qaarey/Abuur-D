@@ -19,7 +19,7 @@ export default async function SupportPage({ searchParams }: PageProps<"/admin/su
   const shown = msgs.filter((m) => !status || m.status === status);
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Support & Tickets" subtitle="Customer complaints, questions and requests from the ABUUR contact form." />
       <ErrorNote message={all.error} />
       <KpiGrid

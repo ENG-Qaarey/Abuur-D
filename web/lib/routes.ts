@@ -11,12 +11,13 @@ export const routes = {
   login: "/login",
   register: "/register",
   forgotPassword: "/forgot-password",
+  resetPassword: "/reset-password",
   dashboard: "/dashboard",
   terms: "/terms",
   privacy: "/privacy",
 } as const;
 
-/** Super Admin console. Never mixed with the business dashboard at /dashboard. */
+/** Super Admin console. Platform Admin role. */
 export const adminRoutes = {
   dashboard: "/admin",
   analytics: "/admin/analytics",
@@ -44,6 +45,22 @@ export const adminRoutes = {
   system: "/admin/system",
   settings: "/admin/settings",
   exportBusinesses: "/admin/businesses/export",
+  packages: "/admin/packages",
+  whatsappProviders: "/admin/integrations/whatsapp",
+  smsProviders: "/admin/integrations/sms",
+  platformFinance: "/admin/finance",
+  reports: "/admin/analytics",
+} as const;
+
+/** Role-based dashboard routes. */
+export const roleRoutes = {
+  SUPER_ADMIN: "/admin",
+  OWNER: "/dashboard",
+  STAFF: "/staff",
+  DESIGNER: "/creative",
+  MARKETING_MANAGER: "/marketing",
+  STORE_MANAGER: "/store",
+  FINANCE_MANAGER: "/finance",
 } as const;
 
 export const CONTACT_EMAIL = "hello@abuur.so";

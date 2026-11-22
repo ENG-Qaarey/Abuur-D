@@ -14,7 +14,7 @@ const PROVIDERS = [
 export default async function IntegrationsPage() {
   await requireSuperAdmin();
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Integrations" subtitle="Meta, WhatsApp, SMS and other external providers." />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {PROVIDERS.map(({ name, about, icon: Icon }) => (

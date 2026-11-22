@@ -7,7 +7,7 @@ import { requireSuperAdmin } from "@/lib/admin";
 export default async function FeatureFlagsPage() {
   await requireSuperAdmin();
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Feature Flags" subtitle="Turn features on or off for the whole platform or for single businesses." />
       <SubTabs tabs={TABS.modules} />
       <Panel title="Proposed flags" subtitle="Flags this console will manage once the backend stores them.">

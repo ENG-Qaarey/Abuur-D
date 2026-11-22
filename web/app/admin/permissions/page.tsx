@@ -12,7 +12,7 @@ const ICON = {
 export default async function PermissionsPage() {
   await requireSuperAdmin();
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Roles & Permissions" subtitle="Role-based access for the ABUUR team. Business users never see another business's data." />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">

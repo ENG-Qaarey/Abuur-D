@@ -18,7 +18,7 @@ export default async function PlansPage() {
   const plans = await loadPlans();
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader
         title="Plans & Pricing"
         subtitle="The Starter, Pro and Enterprise plans business owners subscribe to. Payment is agreed off-platform."

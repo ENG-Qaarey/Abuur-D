@@ -9,7 +9,7 @@ import {
   Truck,
   Wallet,
   type LucideIcon,
-} from "lucide-react";
+} from "./icons";
 
 /**
  * Floating shop icons for the order story. Each has a parallax speed: GSAP moves

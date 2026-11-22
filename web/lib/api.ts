@@ -7,7 +7,7 @@ export type ApiResult<T> =
   | { ok: false; status: number; message: string };
 
 type ApiOptions = {
-  method?: "GET" | "POST" | "PATCH" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: unknown;
   token?: string;
   businessId?: string;
@@ -22,6 +22,15 @@ function errorMessage(body: unknown, status: number): string {
     if (typeof message === "string") return message;
   }
   return "Something went wrong. Please try again.";
+}
+
+/**
+ * The Express API wraps results as `{ success, statusCode, data, meta? }`; callers get `data`
+ * (lists stay plain arrays, which is what the pages expect).
+ */
+function unwrap(body: unknown): unknown {
+  if (!body || typeof body !== "object" || !("success" in body) || !("data" in body)) return body;
+  return (body as { data: unknown }).data;
 }
 
 /** The visitor's IP, so backend rate limits apply per visitor, not per Next server. */
@@ -62,7 +71,7 @@ export async function api<T>(path: string, options: ApiOptions = {}): Promise<Ap
     if (!response.ok) {
       return { ok: false, status: response.status, message: errorMessage(body, response.status) };
     }
-    return { ok: true, status: response.status, data: body as T };
+    return { ok: true, status: response.status, data: unwrap(body) as T };
   } catch {
     return {
       ok: false,

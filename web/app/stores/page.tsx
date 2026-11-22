@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, MapPin, Package, Store } from "lucide-react";
+import { ArrowRight, MapPin, Package, Store, ChevronRight } from "lucide-react";
 import { SiteShell } from "@/components/landing/site-shell";
 import { PageHero } from "@/components/landing/page-hero";
 import { FinalCTA } from "@/components/landing/final-cta";
@@ -49,37 +49,54 @@ export default async function StoresPage() {
       <section className="section-main pb-20 pt-4 sm:pb-28">
         <div className="cl-container">
           {stores.length > 0 ? (
-            <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {stores.map((s) => (
-                <article key={s.id} className="abuur-tile flex flex-col p-6">
-                  <div className="flex items-center gap-3">
-                    {s.logoUrl ? (
-                      // Store logos are user-supplied URLs on arbitrary hosts, so a plain img is used.
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={s.logoUrl} alt="" className="h-12 w-12 rounded-xl object-cover" />
-                    ) : (
-                      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cl-blue text-sm font-bold text-white">
-                        {initials(s.name)}
-                      </span>
-                    )}
-                    <div className="min-w-0">
-                      <h2 className="truncate font-semibold text-cl-text">{s.name}</h2>
-                      <p className="truncate text-xs text-cl-muted">abuur.so/{s.slug}</p>
+                <Link
+                  key={s.id}
+                  href={`/stores/${s.slug}`}
+                  className="block"
+                >
+                  <article className="abuur-tile flex flex-col h-full p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      {s.logoUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={s.logoUrl} alt="" className="h-12 w-12 rounded-xl object-cover" />
+                      ) : (
+                        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cl-blue text-sm font-bold text-white">
+                          {initials(s.name)}
+                        </span>
+                      )}
+                      <div className="min-w-0">
+                        <h2 className="truncate font-semibold text-cl-text">{s.name}</h2>
+                        <p className="truncate text-xs text-cl-muted">abuur.so/{s.slug}</p>
+                      </div>
                     </div>
-                  </div>
-                  {s.description && <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-cl-muted">{s.description}</p>}
-                  <div className="mt-4 flex flex-wrap gap-2 text-xs text-cl-muted">
-                    {s.industry && <span className="rounded-full bg-cl-blue-light px-2.5 py-1 font-medium text-cl-accent">{s.industry}</span>}
-                    {s.city && (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-cl-border px-2.5 py-1">
-                        <MapPin size={12} /> {s.city}
-                      </span>
+                    {s.description && (
+                      <p className="mt-0 line-clamp-2 text-sm leading-relaxed text-cl-muted flex-1">
+                        {s.description}
+                      </p>
                     )}
-                    <span className="inline-flex items-center gap-1 rounded-full border border-cl-border px-2.5 py-1">
-                      <Package size={12} /> {s.productCount} {s.productCount === 1 ? "product" : "products"}
-                    </span>
-                  </div>
-                </article>
+                    <div className="mt-auto pt-4 flex flex-wrap gap-2 text-xs text-cl-muted">
+                      {s.industry && (
+                        <span className="rounded-full bg-cl-blue-light px-2.5 py-1 font-medium text-cl-accent">
+                          {s.industry}
+                        </span>
+                      )}
+                      {s.city && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-cl-border px-2.5 py-1">
+                          <MapPin size={12} /> {s.city}
+                        </span>
+                      )}
+                      <span className="inline-flex items-center gap-1 rounded-full border border-cl-border px-2.5 py-1">
+                        <Package size={12} /> {s.productCount} {s.productCount === 1 ? "product" : "products"}
+                      </span>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-cl-border/50 flex items-center justify-between">
+                      <span className="text-xs font-medium text-cl-muted">View store</span>
+                      <ChevronRight size={14} className="text-cl-accent" />
+                    </div>
+                  </article>
+                </Link>
               ))}
             </Stagger>
           ) : (

@@ -106,7 +106,14 @@ export function ActivityChart({ series }: { series: Series[] }) {
         ))}
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} className="mt-4 h-auto w-full" role="img" aria-label={`${total} records in the selected range`}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className="mt-4 block h-auto w-full"
+        style={{ aspectRatio: `${W} / ${H}` }}
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        aria-label={`${total} records in the selected range`}
+      >
         {[0, 1, 2, 3, 4].map((i) => {
           const v = (yMax / 4) * i;
           return (
@@ -167,8 +174,8 @@ export function Donut({
   const gap = segments.filter((s) => s.value > 0).length > 1 ? 3 : 0;
   let offset = 0;
   return (
-    <div className="relative" style={{ width: size, height: size }}>
-      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} className="-rotate-90" aria-hidden>
+    <div className="relative w-full max-w-[170px] aspect-square" style={{ maxWidth: size }}>
+      <svg viewBox={`0 0 ${size} ${size}`} width="100%" height="100%" className="-rotate-90" preserveAspectRatio="xMidYMid meet" aria-hidden>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--cl-border)" strokeWidth={thickness} />
         {total > 0 &&
           segments.map((s) => {

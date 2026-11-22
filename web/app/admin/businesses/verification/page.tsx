@@ -13,7 +13,7 @@ export default async function VerificationPage() {
   const oldestDays = items[0] ? daysSince(items[0].createdAt) : 0;
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Business Verification" subtitle="Review new businesses before they can open a store. Oldest first." />
       <SubTabs tabs={TABS.businesses} />
       <ErrorNote message={pending.error} />

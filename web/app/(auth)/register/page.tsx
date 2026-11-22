@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AuthForm } from "@/components/auth/auth-form";
 import { getCurrentUser } from "@/lib/session";
+import { roleRoutes } from "@/lib/routes";
 
 export const metadata: Metadata = {
   title: "Open Your Store | ABUUR Digital",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RegisterPage() {
-  if (await getCurrentUser()) redirect("/dashboard");
+  const user = await getCurrentUser();
+  if (user) redirect(roleRoutes[user.platformRole as keyof typeof roleRoutes]);
   return <AuthForm mode="register" />;
 }

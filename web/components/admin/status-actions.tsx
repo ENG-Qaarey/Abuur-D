@@ -1,3 +1,5 @@
+"use client";
+
 import { setBusinessStatusAction, setMessageStatusAction, setUserStatusAction } from "@/lib/actions/admin";
 import { ActionButton } from "./client";
 
@@ -7,9 +9,24 @@ function Forms({ id, action, acts }: { id: string; action: (f: FormData) => Prom
   return (
     <div className="flex flex-wrap justify-end gap-1.5">
       {acts.map((a) => (
-        <form key={a.status} action={action}>
+        <form
+          key={a.status}
+          action={action}
+          onSubmit={(event) => {
+            if (["SUSPENDED", "INACTIVE"].includes(a.status)) {
+              const reason = window.prompt(`Reason for ${a.status === "SUSPENDED" ? "suspending" : "rejecting"} this business (minimum 5 characters):`);
+              if (!reason || reason.trim().length < 5) {
+                event.preventDefault();
+                return;
+              }
+              const input = event.currentTarget.querySelector<HTMLInputElement>('input[name="reason"]');
+              if (input) input.value = reason.trim();
+            }
+          }}
+        >
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="status" value={a.status} />
+          <input type="hidden" name="reason" value="" />
           <ActionButton variant={a.variant} confirm={a.confirm}>
             {a.label}
           </ActionButton>

@@ -18,7 +18,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { routes } from "@/lib/routes";
+import { routes, roleRoutes } from "@/lib/routes";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -36,7 +36,7 @@ const NAV_LINKS: { label: string; href: string; icon: LucideIcon }[] = [
  * "Tubelight" navbar: a pill glides to whichever link is hovered,
  * and the current page wears a glowing lamp on top.
  */
-export function Navbar({ signedIn = false }: { signedIn?: boolean }) {
+export function Navbar({ signedIn = false, user }: { signedIn?: boolean; user?: { platformRole?: string } | null }) {
   const pathname = usePathname();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
@@ -127,7 +127,7 @@ export function Navbar({ signedIn = false }: { signedIn?: boolean }) {
           <ThemeToggle />
           <div className="hidden items-center gap-1.5 md:flex">
             {signedIn ? (
-              <Link href={routes.dashboard} className="nav-cta abuur-focus group">
+              <Link href={user ? roleRoutes[user.platformRole as keyof typeof roleRoutes] : routes.dashboard} className="nav-cta abuur-focus group">
                 <LayoutDashboard size={16} />
                 Dashboard
               </Link>
@@ -212,7 +212,7 @@ export function Navbar({ signedIn = false }: { signedIn?: boolean }) {
             </nav>
             <div className="grid gap-2 border-t border-cl-border p-3 sm:grid-cols-2">
               {signedIn ? (
-                <Link href={routes.dashboard} className="cl-btn cl-btn-primary w-full !rounded-xl sm:col-span-2">
+                <Link href={user ? roleRoutes[user.platformRole as keyof typeof roleRoutes] : routes.dashboard} className="cl-btn cl-btn-primary w-full !rounded-xl sm:col-span-2">
                   <LayoutDashboard size={16} />
                   Dashboard
                 </Link>

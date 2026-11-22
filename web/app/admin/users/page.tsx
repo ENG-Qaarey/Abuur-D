@@ -24,7 +24,7 @@ export default async function UsersPage({ searchParams }: PageProps<"/admin/user
   const count = (s: string) => all.filter((u) => u.status === s).length;
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Users" subtitle="Manage platform users and account access." />
       <SubTabs tabs={TABS.users} />
       <ErrorNote message={users.error} />

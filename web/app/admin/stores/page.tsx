@@ -11,7 +11,7 @@ export default async function StoresPage() {
   const total = biz.data.items.reduce((a, b) => a + b.storeCount, 0);
 
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Store Management" subtitle="Registered stores, their products and reported content." />
       <ErrorNote message={biz.error} />
       <KpiGrid

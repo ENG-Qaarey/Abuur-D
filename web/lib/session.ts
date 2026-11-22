@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { api } from "./api";
-import type { SessionUser } from "./types";
+import { api, type ApiResult } from "./api";
+import type { AuthResponse, SessionUser } from "./types";
 
 export const SESSION_COOKIE = "abuur_session";
 const DEFAULT_MAX_AGE = 60 * 60 * 24; // 1 day
@@ -24,6 +24,19 @@ export async function setSession(token: string, expiresIn?: string) {
     path: "/",
     maxAge: toSeconds(expiresIn),
   });
+}
+
+/**
+ * Trades a Supabase access token for an ABUUR API token (the API verifies the Supabase token
+ * and finds or creates the matching ABUUR user), then stores the ABUUR session cookie.
+ */
+export async function startSessionFromSupabase(supabaseAccessToken: string): Promise<ApiResult<AuthResponse>> {
+  const result = await api<AuthResponse>("/auth/supabase", {
+    method: "POST",
+    body: { access_token: supabaseAccessToken },
+  });
+  if (result.ok) await setSession(result.data.access_token, result.data.expires_in);
+  return result;
 }
 
 export async function clearSession() {

@@ -1,12 +1,30 @@
-import { NotConnected, PageHeader } from "@/components/admin/ui";
-import { requireSuperAdmin } from "@/lib/admin";
+import { EmptyRow, ErrorNote, PageHeader, Panel, Table } from "@/components/admin/ui";
+import { fmtDate, loadAuditLogs, requireSuperAdmin } from "@/lib/admin";
 
 export default async function AuditLogsPage() {
-  await requireSuperAdmin();
+  const { token } = await requireSuperAdmin();
+  const logs = await loadAuditLogs(token);
   return (
-    <div className="mx-auto max-w-[1500px] space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <PageHeader title="Audit Logs" subtitle="Track administrative actions and security events." />
-      <NotConnected endpoint="GET /audit-logs" what="The backend already records audit entries (for example when you approve or suspend a business), but the list endpoint has no access policy yet. Once enabled, every entry shows who did what, when and from where." items={["Who made the change", "Action and entity", "IP address and device", "Timestamp"]} />
+      <ErrorNote message={logs.error} />
+      <Panel title="Administrative activity" subtitle={`${logs.data.length} recent entries`}>
+        <Table head={["Action", "Entity", "IP address", "Recorded"]} minWidth={820}>
+          {logs.data.length === 0 ? (
+            <EmptyRow cols={4}>No audit entries recorded yet.</EmptyRow>
+          ) : logs.data.map((log) => (
+            <tr key={log.id}>
+              <td className="font-semibold">{log.action}</td>
+              <td>
+                <p>{log.entityType}</p>
+                <p className="max-w-xs truncate font-mono text-xs text-cl-muted">{log.entityId ?? "—"}</p>
+              </td>
+              <td className="text-cl-muted">{log.ipAddress ?? "—"}</td>
+              <td className="text-cl-muted">{fmtDate(log.createdAt)}</td>
+            </tr>
+          ))}
+        </Table>
+      </Panel>
     </div>
   );
 }

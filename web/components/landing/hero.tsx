@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, PlayCircle } from "lucide-react";
-import { hasSession } from "@/lib/session";
-import { routes } from "@/lib/routes";
+import { ArrowRight, CheckCircle2, PlayCircle } from "./icons";
+import { getCurrentUser } from "@/lib/session";
+import { routes, roleRoutes } from "@/lib/routes";
 import { HeroShowcase } from "./hero-showcase";
 import { HeroMotion } from "./hero-motion";
 import { HeroBackdrop } from "./hero-backdrop";
@@ -22,7 +22,8 @@ function Words({ text, className = "" }: { text: string; className?: string }) {
 }
 
 export async function Hero() {
-  const signedIn = await hasSession();
+  const user = await getCurrentUser();
+  const signedIn = !!user;
   return (
     <section id="home" className="hero-section relative -mt-[4.75rem] overflow-hidden pt-[4.75rem]">
       <HeroBackdrop />
@@ -58,7 +59,7 @@ export async function Hero() {
         </p>
 
         <div data-hero="cta" className="mt-9 flex w-full flex-col items-center">
-          <ClaimLink href={signedIn ? `${routes.dashboard}#new-business` : routes.register} />
+          <ClaimLink href={user ? `${roleRoutes[user.platformRole as keyof typeof roleRoutes]}#new-business` : routes.register} />
           <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-cl-muted">
             {PROOF.map((item) => (
               <li key={item} className="inline-flex items-center gap-1.5">

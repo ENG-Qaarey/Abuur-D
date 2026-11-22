@@ -3,13 +3,13 @@
 import { useActionState, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { ArrowLeft, Link2, Mail, ShieldCheck, User } from "lucide-react";
-import { forgotPasswordAction, loginAction, registerAction } from "@/lib/actions/auth";
+import { forgotPasswordAction, loginAction, registerAction, resetPasswordAction } from "@/lib/actions/auth";
 import { routes } from "@/lib/routes";
-import { IDLE } from "@/lib/types";
+import { IDLE, type FormState } from "@/lib/types";
 import { CLAIM_KEY } from "@/components/landing/claim-link";
 import { Field, FormAlert, PasswordInput, StrengthMeter, SubmitButton } from "./auth-ui";
 
-export type AuthMode = "login" | "register" | "forgot";
+export type AuthMode = "login" | "register" | "forgot" | "reset";
 type Errors = Partial<Record<string, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -19,6 +19,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function validate(mode: AuthMode, data: FormData): Errors {
   const v = (k: string) => String(data.get(k) ?? "");
   const errors: Errors = {};
+  if (mode === "reset") {
+    if (v("password").length < 8) errors.password = "Use at least 8 characters.";
+    if (!v("confirmPassword")) errors.confirmPassword = "Confirm your password.";
+    else if (v("confirmPassword") !== v("password")) errors.confirmPassword = "The passwords don't match.";
+    return errors;
+  }
   const email = v("email").trim();
   if (!email) errors.email = "Enter your email address.";
   else if (!EMAIL_RE.test(email)) errors.email = "Enter a valid email address, like name@example.com.";
@@ -59,8 +65,9 @@ function useClientValidation(mode: AuthMode) {
 
 /* ------------------------------------------------------------------ sign in */
 
-function LoginForm() {
-  const [state, action, pending] = useActionState(loginAction, IDLE);
+function LoginForm({ notice }: { notice?: string }) {
+  const initial: FormState = notice ? { status: "error", message: notice } : IDLE;
+  const [state, action, pending] = useActionState(loginAction, initial);
   const { errors, onSubmit, clear } = useClientValidation("login");
   return (
     <form action={action} onSubmit={onSubmit} noValidate className="space-y-4">
@@ -120,6 +127,19 @@ function RegisterForm() {
   const { errors, onSubmit, clear } = useClientValidation("register");
   const [password, setPassword] = useState("");
   const claimedSlug = useSyncExternalStore(subscribeNoop, readClaimedSlug, () => null);
+
+  // Account created; it's finished from the confirmation email.
+  if (state.status === "success") {
+    return (
+      <div className="space-y-5">
+        <FormAlert state={state} />
+        <Link href={routes.login} className="auth-link inline-flex items-center gap-1.5 text-sm">
+          <ArrowLeft size={15} aria-hidden />
+          Back to sign in
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <form action={action} onSubmit={onSubmit} noValidate className="space-y-4">
@@ -254,7 +274,7 @@ function ForgotForm() {
             <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
           </div>
           <div className="pt-2">
-            <SubmitButton pending={pending} label="Request reset" pendingLabel="Sending request…" />
+            <SubmitButton pending={pending} label="Send reset link" pendingLabel="Sending link…" />
           </div>
         </form>
       )}
@@ -266,8 +286,45 @@ function ForgotForm() {
   );
 }
 
-export function AuthForm({ mode }: { mode: AuthMode }) {
+/* ------------------------------------------------------------------ reset password */
+
+function ResetForm() {
+  const [state, action, pending] = useActionState(resetPasswordAction, IDLE);
+  const { errors, onSubmit, clear } = useClientValidation("reset");
+  const [password, setPassword] = useState("");
+  return (
+    <form action={action} onSubmit={onSubmit} noValidate className="space-y-4">
+      <FormAlert state={state} />
+      <div onInput={clear("password")}>
+        <PasswordInput
+          label="New password"
+          placeholder="At least 8 characters"
+          autoComplete="new-password"
+          error={errors.password}
+          onValue={setPassword}
+        />
+        <StrengthMeter password={password} />
+      </div>
+      <div onInput={clear("confirmPassword")}>
+        <PasswordInput
+          id="confirmPassword"
+          name="confirmPassword"
+          label="Confirm new password"
+          placeholder="Enter your new password again"
+          autoComplete="new-password"
+          error={errors.confirmPassword}
+        />
+      </div>
+      <div className="pt-2">
+        <SubmitButton pending={pending} label="Save new password" pendingLabel="Saving…" />
+      </div>
+    </form>
+  );
+}
+
+export function AuthForm({ mode, notice }: { mode: AuthMode; notice?: string }) {
   if (mode === "register") return <RegisterForm />;
   if (mode === "forgot") return <ForgotForm />;
-  return <LoginForm />;
+  if (mode === "reset") return <ResetForm />;
+  return <LoginForm notice={notice} />;
 }
