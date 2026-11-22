@@ -16,12 +16,9 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-<<<<<<< HEAD
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.119.2",
-=======
     "@opennextjs/cloudflare": "^1.20.18",
->>>>>>> f21b9535d26d859637d7186ebaf7ebb8a8d3ac8e
     "framer-motion": "^12.42.2",
     "gsap": "^3.15.1",
     "lucide-react": "^1.27.0",
