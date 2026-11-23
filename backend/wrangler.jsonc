@@ -16,8 +16,8 @@
 		// recurring entries, reminders | daily 03:00 UTC: inactivity check
 		"crons": ["* * * * *", "*/10 * * * *", "0 3 * * *"]
 	},
-	// Non-secret settings. Secrets (DATABASE_URL, DIRECT_URL, JWT_SECRET, SUPABASE_PUBLISHABLE_KEY,
-	// SUPABASE_SECRET_KEY, CREDENTIALS_KEY) are set in the Cloudflare dashboard, never here.
+	// Non-secret settings (the Supabase publishable key is public). Secrets (DATABASE_URL, DIRECT_URL,
+	// JWT_SECRET, SUPABASE_SECRET_KEY, CREDENTIALS_KEY) are set in the Cloudflare dashboard, never here.
 	"vars": {
 		"NODE_ENV": "production",
 		"API_PREFIX": "api",
@@ -26,6 +26,7 @@
 		"SITE_URL": "https://abuur-d.muscabaxmed762.workers.dev",
 		"PUBLIC_API_URL": "https://abuur-api.muscabaxmed762.workers.dev/api",
 		"SUPABASE_URL": "https://xlwmxjrymlugpdzmcmew.supabase.co",
+		"SUPABASE_PUBLISHABLE_KEY": "sb_publishable_Xx8hZlQ_p-sZA8cre6G9VA_4aK_feh7",
 		"SUPABASE_JWKS_URL": "https://xlwmxjrymlugpdzmcmew.supabase.co/auth/v1/.well-known/jwks.json",
 		"STORAGE_DRIVER": "supabase",
 		"STORAGE_BUCKET": "abuur-private",
