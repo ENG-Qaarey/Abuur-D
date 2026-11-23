@@ -6,15 +6,17 @@ import { Request, Response, NextFunction } from 'express';
  */
 export function rateLimit(options: { windowMs: number; max: number; message?: string }) {
   const hits = new Map<string, { count: number; resetAt: number }>();
-
-  setInterval(() => {
-    const now = Date.now();
-    for (const [key, entry] of hits) if (entry.resetAt <= now) hits.delete(key);
-  }, options.windowMs).unref();
+  // Expired entries are swept during requests (no background timer: Cloudflare Workers
+  // don't allow timers at startup).
+  let nextSweep = 0;
 
   return (req: Request, res: Response, next: NextFunction) => {
     const key = req.ip ?? 'unknown';
     const now = Date.now();
+    if (now >= nextSweep) {
+      for (const [k, e] of hits) if (e.resetAt <= now) hits.delete(k);
+      nextSweep = now + options.windowMs;
+    }
     const entry = hits.get(key);
     if (!entry || entry.resetAt <= now) {
       hits.set(key, { count: 1, resetAt: now + options.windowMs });

@@ -107,6 +107,25 @@ async function guarded(name: string, fn: () => Promise<unknown>) {
   }
 }
 
+/** Campaign sending and automation steps (every ~15 s on Node, every minute on Cloudflare). */
+export async function runFastJobs() {
+  await guarded('campaigns', processCampaigns);
+  await guarded('automations', () => runDueExecutions());
+}
+
+/** Invoices, subscriptions, recurring entries and reminders (every ~10 min). */
+export async function runSlowJobs() {
+  await guarded('overdue invoices', markOverdueInvoices);
+  await guarded('subscriptions', subscriptionJobs);
+  await guarded('recurring', recurringTransactions);
+  await guarded('task reminders', taskReminders);
+}
+
+/** Daily inactivity check. */
+export async function runDailyJobs() {
+  await guarded('inactivity', inactivity);
+}
+
 export function startWorker() {
   if (process.env.WORKER_DISABLED === 'true') {
     console.log('[worker] disabled (WORKER_DISABLED=true)');

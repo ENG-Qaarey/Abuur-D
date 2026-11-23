@@ -21,5 +21,11 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"vars": {
+		// Backend API (Worker abuur-api, see backend/wrangler.jsonc)
+		"ABUUR_API_URL": "https://abuur-api.muscabaxmed762.workers.dev/api",
+		"NEXT_PUBLIC_SITE_URL": "https://abuur-d.muscabaxmed762.workers.dev"
+	},
+	"keep_vars": true
 }

@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { Prisma } from '@prisma/client';
+import datamodel from './datamodel.json';
 import { prisma } from '../prisma';
 import { AppError } from '../middleware/error';
 import type { AuthenticatedRequest } from '../middleware/auth';
@@ -21,7 +22,10 @@ import {
 
 // ------------------------------------------------------------------ model metadata (from Prisma)
 
-type FieldMeta = Prisma.DMMF.Field;
+type FieldMeta = Pick<
+  Prisma.DMMF.Field,
+  'name' | 'kind' | 'type' | 'isList' | 'isRequired' | 'isId' | 'isUnique' | 'hasDefaultValue' | 'isUpdatedAt'
+> & { relationName?: string | null; relationFromFields?: readonly string[]; relationToFields?: readonly string[] };
 export type ModelMeta = {
   name: string;
   delegate: string;
@@ -37,7 +41,9 @@ export type ModelMeta = {
 const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
 export const MODELS = new Map<string, ModelMeta>();
-for (const model of Prisma.dmmf.datamodel.models) {
+// Prisma's data model, saved at build time by prisma/dump-datamodel.cjs (Prisma.dmmf isn't
+// available on Cloudflare Workers).
+for (const model of (datamodel as { models: { name: string; fields: FieldMeta[] }[] }).models) {
   const meta: ModelMeta = {
     name: model.name,
     delegate: lowerFirst(model.name),
